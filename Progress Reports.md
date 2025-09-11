@@ -21,3 +21,27 @@ After the research I’ve done, I’m convinced that TRex will be a good solutio
 ### Going Forward
 
 I’m going to continue working with my mentors both at EIT and at my job at Inspire Net, and continue researching how to leverage these tools to achieve my goals.
+
+## Weeks 7-8
+
+### Progress
+
+In week 7 I started working on running the TRex software on real hardware. The first obstacle was getting an operating system installed on the machine, with no graphical output.
+
+The first operating system I tried was CentOS 7.6, the OS and version recommended by the TRex documentation, however the outdated packages didn't work with the most recent version of TRex.
+
+In week 8 I tried installing the latest version of Debian, which is working reasonably well.
+I've successfully run TRex in kernel mode, but still having some glitches with DPDK mode.
+I've started documenting the process of installing Debian on my firebox in the file Installation.md
+
+### Challenges
+
+Finding a way to install a linux distribution on a computer with no graphical output was a big challenge.
+I solved it by generating a custom install image that can be controlled over serial.
+I'm also still struggling with the lack of good documentation for TRex, but making progress nonetheless.
+
+### Palmerston North Linux User Group
+
+In week 8 I gave a presentation to the Palmerson North Linux User Group on the topic of OpenWRT, a Linux distro for routers.
+After my presentation I spoke with a few of the attendees about networking and particularly driver support enabling hardware acceleration for routing.
+I'm hoping this knowledge will help me with completing this project.
