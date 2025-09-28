@@ -45,3 +45,10 @@ I'm also still struggling with the lack of good documentation for TRex, but maki
 In week 8 I gave a presentation to the Palmerson North Linux User Group on the topic of OpenWRT, a Linux distro for routers.
 After my presentation I spoke with a few of the attendees about networking and particularly driver support enabling hardware acceleration for routing.
 I'm hoping this knowledge will help me with completing this project.
+
+## Weeks 9-10
+
+Got TRex working on the firebox in DPDK mode, by moving to CentOS Stream 9
+Extended Install.md
+Ran first benchmarks on a mikrotik router in bridge mode
+Configured mikrotik router to support benchmarks in route mode
