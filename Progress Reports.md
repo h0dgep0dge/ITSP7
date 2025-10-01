@@ -52,3 +52,8 @@ Got TRex working on the firebox in DPDK mode, by moving to CentOS Stream 9
 Extended Install.md
 Ran first benchmarks on a mikrotik router in bridge mode
 Configured mikrotik router to support benchmarks in route mode
+
+## Weeks 11-12
+
+Learning Python API, first automated tests
+Issue, router has degraded performance when starting test using pytohn API, found this is because using the `start --total` command from the console runs the test equally on all available interfaces, while the particular way I've been starting the test via python is biasing towards one interface, creating a bottleneck.
