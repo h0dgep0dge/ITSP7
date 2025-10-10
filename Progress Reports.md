@@ -48,11 +48,21 @@ I'm hoping this knowledge will help me with completing this project.
 
 ## Weeks 9-10
 
-### Milestones
+### Progress
 
-* Got TRex working on the firebox in DPDK mode, by moving to CentOS Stream 9
-* Ran first benchmarks on a Mikrotik router running in bridge mode
-* Developed a simple routing configuration for the Mikrotik router that supports running route mode benchmarks
+I'd been struggling to get TRex running nicely, with some errors related to hugepages, and some incompatability with recent versions of Python.
+After experimenting with CentOS 7.6, I found the distributed version of Python for that OS was much too old for TRex.
+I also tried Debian, but the default configuration of Debian wasn't compatable with how DPDK wants to use hugepages, and the version of Python distributed with Debian gave several errors while running due to the code using deprecated Python features.
+
+I then decided to try moving to CentOS Stream 9, a much more recent version of CentOS than 7.6.
+CentOS Stream 9 has worked perfectly, and was installed using the procedure documented in Install.md
+
+After getting TRex running I was able to run my first loopback benchmarks in DPDK mode, with very good results.
+I wrote some configuration for a Mikrotik RB950G router, and ran my first benchmarks testing ethernet bridging, both hardware accelerated and through the CPU.
+
+### Next steps
+
+Going forward I need to learn to use the TRex Python API to write automated tests, and get started generating reports for the final handover.
 
 ### Documentation
 
@@ -60,6 +70,9 @@ I'm hoping this knowledge will help me with completing this project.
 
 ## Weeks 11-12
 
-
 Learning Python API, first automated tests
-Issue, router has degraded performance when starting test using pytohn API, found this is because using the `start --total` command from the console runs the test equally on all available interfaces, while the particular way I've been starting the test via python is biasing towards one interface, creating a bottleneck.
+
+### First Tests
+
+Degraded preformance due to all traffic being directed to a single port, causing unbalanced RX with balanced TX, bottlenecking on one interface. I fixed this by ammending my stream to direct traffic to a different destination IP based on the direction on a dual port
+Noticed lower performance than rated by Mikrotik, determined this was due to my tests being bidirectional. When doing a unidirectional test, my results match the results from Mikrotik
