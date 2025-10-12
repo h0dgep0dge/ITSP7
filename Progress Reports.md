@@ -70,9 +70,19 @@ Going forward I need to learn to use the TRex Python API to write automated test
 
 ## Weeks 11-12
 
-Learning Python API, first automated tests
+### Progress
 
-### First Tests
+This week I got started digging into the Python API documentation for TRex.
+It's somewhat tricky to get through because it's rather poorly documented, I've relied a lot on example code from Cisco.
 
-Degraded preformance due to all traffic being directed to a single port, causing unbalanced RX with balanced TX, bottlenecking on one interface. I fixed this by ammending my stream to direct traffic to a different destination IP based on the direction on a dual port
-Noticed lower performance than rated by Mikrotik, determined this was due to my tests being bidirectional. When doing a unidirectional test, my results match the results from Mikrotik
+I've also implemented a routing configuration for the Mikrotik router, by setting the interfaces on the Firebox to use 2.2.2.2 and 3.3.3.3 as their default gateway, and by assigning those addresses to the ports on the device under test.
+
+### First Automated Tests
+
+I wrote my first Python script to run an automated series of tests at different speeds and graph the results. A graph from the first data I collected is shown below.
+
+![Chart](chart.png)
+
+In my first tests I found that I was getting quite bad performance in my automated tests compared to tests entered by hand. I found this was due the bidirectional traffic all being generated with the same destination address, meaning all of that traffic was directed to a single port. To fix this issue I configured my test to specifically generate packets with the correct desination IP per the port, and this fixed the issue.
+
+I also noticed lower performance on this router than rated by Mikrotik. After spending a bit of time reading the RFC2544, I realized this was due to my tests being bidirectional. Because most SOHO workloads are heavily skewed towards upload or download, but rarely both, these devices are optimized to do one or the other but not both at the same time.
