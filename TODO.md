@@ -1,8 +1,8 @@
 ### To do list
 
 * Write a stream profile that does everything I need
-  * Addresses directly configurable
-  * Many different IP addresses (500 destinations and sources)
+  * At least 500 different destinations and sources, address ranges directly configurable
+  * Packet size directly configurable
 * Put together configurations for the routers I want to test, in the configurations I want to test
   * Routerboard RB951G-2HnD
     * Bridging (w/ and w/out bridge filter rules)
