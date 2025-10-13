@@ -18,3 +18,4 @@
 * Write a library to iteratively change parameters on a Mikrotik router
 * Write a program that iteratively increases traffic on a port while measuring drop rate, either recording the drop rate for all throughputs, or finding the highest throughput that gives a specified drop rate or less
 * Write a framework to run tests and update parameters
+* Compile report of results
