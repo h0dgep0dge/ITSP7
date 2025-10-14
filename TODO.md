@@ -5,12 +5,12 @@
   * Packet size directly configurable ✅
 * Put together configurations for the routers I want to test, in the configurations I want to test
   * Routerboard RB951G-2HnD
-    * Bridging (w/ and w/out bridge filter rules)
+    * Bridging (w/ and w/out bridge filter rules) ✅
     * Routing
-      * Fast path
-      * 25 filter rules
+      * Fast path ✅
+      * 25 filter rules ✅
       * 25 simple queues
-      * PPPoE, with NAT
+      * PPPoE, with NAT ✅
   * Netcomm NF18AC
     * PPPoE, with NAT
   * Mercku M6A
