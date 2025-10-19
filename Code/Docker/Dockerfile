@@ -1,6 +1,7 @@
 FROM quay.io/centos/centos:stream9
 
-RUN yum install -y wget bash net-tools strace iproute iputils net-tools pciutils vim procps-ng
+RUN yum install -y epel-release
+RUN yum install -y wget bash net-tools strace iproute iputils net-tools pciutils vim procps-ng tcpdump pv
 
 WORKDIR /opt
 COPY v3.06.tar.gz ./
