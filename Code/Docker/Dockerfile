@@ -6,9 +6,12 @@ WORKDIR /opt
 COPY v3.06.tar.gz ./
 RUN tar xfz v3.06.tar.gz
 
-COPY trex_cfg.yaml /etc/
+COPY bridged_trex_cfg.yaml /etc/
+COPY routed_trex_cfg.yaml /etc/
 
-COPY start.sh /
-RUN chmod +x /start.sh
+COPY bridged_start.sh /
+COPY routed_start.sh /
+RUN chmod +x /bridged_start.sh
+RUN chmod +x /routed_start.sh
 
-CMD ["/start.sh"]
+CMD ["/bridged_start.sh"]

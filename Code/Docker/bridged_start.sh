@@ -21,4 +21,4 @@ ip link set veth3 up
 
 
 cd /opt/v3.06
-./t-rex-64 -i -c 4
+./t-rex-64 --cfg /etc/routed_trex_cfg.yaml -i -c 4
