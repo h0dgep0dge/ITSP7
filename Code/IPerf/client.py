@@ -2,7 +2,7 @@ import iperf3
 
 
 client = iperf3.Client()
-client.duration = 5
+client.duration = 10
 client.server_hostname = '172.16.10.1'
 client.port = 5201
 client.protocol = 'udp'
@@ -14,4 +14,5 @@ result = client.run()
 if result.error:
     print(result.error)
 else:
-    print(result)
+    for i in result.json["intervals"]:
+        print(i["sum"]["lost_percent"])
