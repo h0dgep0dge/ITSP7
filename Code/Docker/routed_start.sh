@@ -20,7 +20,7 @@ ip -n router route add 4.4.4.4/32 dev veth2
 
 ip -n router route add 48.0.0.0/16 via 4.4.4.4
 ip -n router route add 16.0.0.0/16 via 1.1.1.1
-ip netns exec router sysctl -w net.ipv6.conf.all.forwarding=1
+ip netns exec router sysctl -w net.ipv4.ip_forward=1
 
 
 ip link set veth0 up
