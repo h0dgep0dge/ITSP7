@@ -1,18 +1,4 @@
-import iperf3
+from func import run_test
 
-
-client = iperf3.Client()
-client.duration = 10
-client.server_hostname = '172.16.10.1'
-client.port = 5201
-client.protocol = 'udp'
-client.blksize = 200
-client.bandwidth = 1000000
-client.reverse = True
-result = client.run()
-
-if result.error:
-    print(result.error)
-else:
-    for i in result.json["intervals"]:
-        print(i["sum"]["lost_percent"])
+result = run_test(1000000,1300, readout=True)
+print(result)
