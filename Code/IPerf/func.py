@@ -1,14 +1,15 @@
 import iperf3
 
-def run_test(rate,size,readout=False):
+iperf_overhead = 42
+
+def run_test(hostname,rate,size,readout=False,port=5201,duration=5):
     client = iperf3.Client()
-    client.duration = 5
-    client.interval = 0.1
-    client.server_hostname = '172.16.10.1'
-    client.port = 5201
+    client.duration = duration
+    client.server_hostname = hostname
+    client.port = port
     client.protocol = 'udp'
     client.blksize = size
-    client.bandwidth = rate
+    client.bandwidth = int(rate)
     client.reverse = True
 
     result = client.run()
@@ -32,5 +33,26 @@ def run_test(rate,size,readout=False):
         print("L3 rate",(result.packets/result.seconds)*(size+8)*8)
         print("L2 rate",(result.packets/result.seconds)*(size+28)*8)
         print("L1 rate",(result.packets/result.seconds)*(size+42)*8)
+        print()
 
     return loss
+
+def run_ndr(hostname,packet_size,bottom_rate=1_000_000,top_rate=1_000_000_000,target_ndr=0,max_iterations=10,target_delta=1000,readout=True,port=5201):
+    low  =  bottom_rate
+    high = top_rate
+    best = bottom_rate
+    iterations = 0
+
+    while iterations < max_iterations:
+        target = (low+high)/2
+        iterations += 1
+        if readout:
+            print(f"Iteration {iterations}, trying {target}")
+        drop_rate = run_test(hostname,target,packet_size,readout=readout,port=port)
+        
+        if drop_rate > target_ndr:
+            high = target
+        else:
+            low = target
+            best = target
+    return (best,best/packet_size)

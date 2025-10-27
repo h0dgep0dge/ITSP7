@@ -1,15 +1,11 @@
-from func import run_test
+from func import *
 
-low  =  8_000_000
-high = 12_000_000
+tests = [
+    {"size":64-iperf_overhead},
+    {"size":512-iperf_overhead},
+    {"size":1500-iperf_overhead},
+]
 
-while True:
-    target = (low+high)/2
-    print("Trying",target)
-    result = run_test(int(target),400,True)
-    
-    if result > 0:
-        high = target
-    else:
-        low = target
-    print()
+for test in tests:
+    test["result"] = run_ndr("172.16.10.1",500-iperf_overhead,readout=True)
+    print(tests)
