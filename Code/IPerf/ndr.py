@@ -7,5 +7,7 @@ tests = [
 ]
 
 for test in tests:
-    test["result"] = run_ndr("172.16.10.1",500-iperf_overhead,readout=True)
+    test["result"] = run_ndr("4.4.4.4",test["size"],readout=True,target_ndr=0.05)
     print(tests)
+
+print(tests)
