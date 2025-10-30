@@ -28,11 +28,11 @@ def run_test(hostname,rate,size,readout=False,port=5201,duration=5):
 
     if readout:
         print("Lost",loss)
-        print("pps",result.packets/result.seconds)
-        print("L4 rate",(result.packets/result.seconds)*(size)*8)
-        print("L3 rate",(result.packets/result.seconds)*(size+8)*8)
-        print("L2 rate",(result.packets/result.seconds)*(size+28)*8)
-        print("L1 rate",(result.packets/result.seconds)*(size+42)*8)
+        print("pps",result.packets/(result.seconds-1))
+        print("L4 rate",(result.packets/(result.seconds-1))*(size)*8)
+        print("L3 rate",(result.packets/(result.seconds-1))*(size+8)*8)
+        print("L2 rate",(result.packets/(result.seconds-1))*(size+28)*8)
+        print("L1 rate",(result.packets/(result.seconds-1))*(size+42)*8)
         print()
 
     return {"sent":packets_total,"lost":lost_total}
@@ -56,6 +56,6 @@ def run_ndr(hostname,packet_size,bottom_rate=1_000_000,top_rate=1_000_000_000,ta
         else:
             low = target
             best_pps = results["sent"]/duration
-            best_bw = best_pps*packet_size
+            best_bw = best_pps*packet_size*8
     return {"bw":best_bw,"pps":best_pps}
 
