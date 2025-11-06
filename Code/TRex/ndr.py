@@ -31,7 +31,6 @@ class Tester:
         pkt = Ether()/IP(src=src,dst=dst)/UDP(sport=31337,dport=31337)
         padding = max(size-len(pkt),0)*'x'
 
-
         instructions = STLScVmRaw( [ 
                                      STLVmFlowVar ( "ip_src", min_value=1,max_value=511,size=2,op="random"),
                                      STLVmWrFlowVar (fv_name="ip_src", pkt_offset= "IP.src", offset_fixup=2 ),
@@ -49,22 +48,24 @@ class Tester:
     def wait(self):
         self.handle.wait_on_traffic()
 
-    def run_test(self,rate,duration=5):
+    def run_test(self,rate,duration=5,readout=False):
         self.handle.clear_stats()
-        self.handle.start(mult=f"{int(rate)}bpsl1",total=True,duration=duration,ports=self.get_active_ports())
+        self.handle.start(mult=f"{rate}%",duration=duration,ports=self.get_active_ports())
         self.wait()
         time.sleep(1)
         stats = self.handle.get_stats()
-        #print(stats["total"])
+        if readout:
+            print(stats["total"])
         return {"sent":stats["total"]["opackets"],"lost":stats["total"]["opackets"]-self.handle.get_stats()["total"]["ipackets"]}
     
-    def run_ndr(self,packet_size=512,bottom_rate=1_000_000,top_rate=1_000_000_000,target_ndr=0,max_iterations=10,readout=True,duration=5,ports=[0]):
+    def run_ndr(self,packet_size=512,bottom_rate=0,top_rate=100,target_ndr=0,max_iterations=10,readout=False,duration=5,ports=[0]):
         low  =  bottom_rate
         high = top_rate
         best_bw = bottom_rate
         best_pps = 0
         iterations = 0
 
+        self.handle.reset() # make sure there are no lingering streams on the ports
         for port in ports:
             self.add_stream(port,size=packet_size)
 
@@ -72,15 +73,15 @@ class Tester:
             target = (low+high)/2
             iterations += 1
             if readout:
-                print(f"Iteration {iterations}, trying {target}")
-            results = self.run_test(rate=target,duration=duration)
+                print(f"Iteration {iterations}, trying {target}%")
+            results = self.run_test(rate=target,duration=duration,readout=readout)
             loss = results["lost"]/results["sent"]
             if loss > target_ndr:
                 high = target
             else:
                 low = target
                 best_pps = results["sent"]/duration
-                best_bw = best_pps*packet_size*8
+                best_bw = best_pps*(packet_size)*8
         return {"bw":best_bw,"pps":best_pps}
 
 tests = [
@@ -91,7 +92,8 @@ tests = [
 
 with Tester(user="root",server="localhost") as t:
     for test in tests:
-        test["result"] = t.run_ndr(packet_size=test["size"],target_ndr=0.05,duration=5)
+        test["result"] = t.run_ndr(packet_size=test["size"],target_ndr=0.05,duration=5,readout=False,ports=[0,2])
         print(tests)
 
 print(tests)
+
