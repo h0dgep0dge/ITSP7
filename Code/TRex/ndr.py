@@ -27,7 +27,9 @@ class Tester:
             ports.append(port)
         return ports
 
-    def add_stream(self,port,src="16.0.0.0",dst="48.0.0.0",size=512):
+    def add_stream(self,port,src_msb=16,dst_msb=48,size=512):
+        src = f"{src_msb+port}.0.0.0"
+        dst = f"{dst_msb+port}.0.0.0"
         pkt = Ether()/IP(src=src,dst=dst)/UDP(sport=31337,dport=31337)
         padding = max(size-len(pkt),0)*'x'
 
@@ -92,8 +94,7 @@ tests = [
 
 with Tester(user="root",server="localhost") as t:
     for test in tests:
-        test["result"] = t.run_ndr(packet_size=test["size"],target_ndr=0.05,duration=5,readout=False,ports=[0,2])
-        print(tests)
+        test["result"] = t.run_ndr(packet_size=test["size"],target_ndr=0.05,duration=30,readout=False,ports=[0,2])
 
 print(tests)
 
