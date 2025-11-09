@@ -18,8 +18,8 @@
 * Write a library to iteratively change parameters on a Mikrotik router
 * Write a program that iteratively increases traffic on a port while measuring drop rate, either recording the drop rate for all throughputs, or finding the highest throughput that gives a specified drop rate or less
   * IPerf ✅
-  * TRex
-* Write a framework to run tests and update parameters
+  * TRex ✅
+* Write a framework to run tests and update parameters ✅
 * Collect results
   * IPerf
     * RB951G-2HnD ✅
@@ -27,10 +27,10 @@
     * Mercku M6A ✅
   * TRex
     * RB951G-2HnD
-      * Bridging (w/ and w/out bridge filter rules)
+      * Bridging (w/ and w/out bridge filter rules) ✅
       * Routing
-        * Fast path
-        * 25 filter rules
+        * Fast path ✅
+        * 25 filter rules ✅
         * 25 simple queues
-        * PPPoE, with NAT
+        * PPPoE, with NAT ✅
 * Compile report of results
