@@ -1,4 +1,4 @@
-from func import *
+from iperf_lib import *
 
 tests = [
     {"size":64-iperf_overhead},
