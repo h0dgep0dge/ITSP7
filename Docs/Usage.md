@@ -1,5 +1,7 @@
 ## Using IPerf for testing in direct mode
 
+IPerf is recommended for tests where the client is required to be directly attached to the router, on the same LAN. For simulating clients behind a router, use TRex for indirect testing.
+
 The iperf_lib.py file has 2 functions, `run_test()` for running a one-off test, and `run_ndr()` for running a "non drop rate" test.
 
 ~~~
@@ -36,3 +38,16 @@ run_ndr(hostname, packet_size, bottom_rate=1_000_000, top_rate=1_000_000_000, ta
 ~~~
 
 ## Using TRex for testing in indirect mode
+
+ndr.py provides a Tester class for configuring and running tests through TRex. Streams can be configured and customized, and then run at a target rate with `run_test()` or run a series of tests to calculate the NDR with `ndr_simplex()` and `ndr_duplex()`
+
+class Tester:
+    def __init__(self,user,server,verbose_level='error')
+    def get_active_ports(self):
+    def add_stream_multi(self,pair,src_msb=16,dst_msb=48,size=512,direction=0):
+    def add_stream(self,pair,src_msb=16,dst_msb=48,size=512,direction=0,instructions=None,pps=1000):
+    def wait(self):
+    def run_test(self,rate,duration=5,readout=False)
+    def ndr_simplex(self,packet_size=512,bottom_rate=0,top_rate=100,target_ndr=0,max_iterations=10,readout=False,duration=5,pairs=[0])
+    def ndr_duplex_acks(self,packet_size=512,bottom_rate=0,top_rate=100,target_ndr=0,max_iterations=10,readout=False,duration=5,pairs=[0])
+    def run_ndr(self,packet_size=512,bottom_rate=0,top_rate=100,target_ndr=0,max_iterations=10,readout=False,duration=5):
