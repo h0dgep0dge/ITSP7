@@ -41,8 +41,10 @@ class Tester:
 
     def add_stream(self,pair,src_msb=16,dst_msb=48,size=512,direction=0,instructions=None,pps=1000):
         port = pair*2+direction
-        src = f"{src_msb+port}.0.0.1"
-        dst = f"{dst_msb+port}.0.0.1"
+        src = f"{src_msb+direction}.0.0.1"
+        dst = f"{dst_msb+direction}.0.0.1"
+        if direction == 1:
+            src,dst = dst,src
         pkt = Ether()/IP(src=src,dst=dst)/UDP(sport=31337,dport=31337)
         padding = max(size-len(pkt),0)*'x'
 
